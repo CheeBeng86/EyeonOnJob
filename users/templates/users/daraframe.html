@@ -1,0 +1,17 @@
+<center class="row">
+<h1>Job Street Summarize</h1>
+</center>
+
+
+{% block body_block %}
+<form action = "job" method ='post'>
+
+    {% csrf_token %}
+    <center class="row">
+    <br>
+    Enter Job interested company: <input type = "text" name = "filterPosition"><br>
+    Enter Stage in Malaysia : <input type = "text" name = "statefilter"><br>
+    <input type = "submit">
+    </center>
+</form>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% block body_block %}
+    {% csrf_token %}
+<div class="container-fluid">
+    
+    <center class="row">
+        <h1>Job Street </h1>
+    </center>
+    {% autoescape off %}
+    {{ plot_div_all}}
+
+    <center class="row">
+        <h1>Jobstreet {{positionfilter}} Vacant at Company below</h1>
+    </center>
+    
+    {{ plot_div_position}}
+
+    <center class="row">
+        <h1>Jobstreet {{statefilter}} Vacant at Company below</h1>
+    </center>
+    
+    {{ plot_div_State}}
+
+
+    <h1>read_df</h1>
+    {{read_df}}
+
+    <h1>x_data</h1>
+    {{x_data}}
+
+    <h1>y_data</h1>
+    {{y_data}}
+
+    <h1>position_df</h1>
+    {{position_df}}
+
+    <h1>positionfilter</h1>
+    {{positionfilter}}
+
+    {% endautoescape %}
+</div>
+{% endblock %}

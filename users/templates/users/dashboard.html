@@ -1,0 +1,74 @@
+<!--users/templates/users/dashboard.html-->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+{% block body_block %}
+<form action='job' method ='post'>
+
+  {% csrf_token %}
+
+Hello, {{ user.username|default:'Guest' }}!
+
+<div>
+    {% if user.is_authenticated %}
+        <a href="{% url 'logout' %}">Logout</a>
+        <a href="{% url 'password_change' %}">Change password</a>
+    {% else %}
+        <a href="{% url 'login' %}">Login</a>
+    {% endif %}
+</div>
+  {% if user.is_authenticated %}
+  <p>
+  <center>
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary" id="scrapedata" value=1 name="scrapedata" >Scrape Data</button>
+      <div class="alert alert-success" role="alert">
+        {% autoescape off %}
+        <h2>{{ plot_div_scrape }}</h2>
+        {% endautoescape %}
+      </div>
+    </div>
+
+    <div class="input-group">
+        <div class="input-group-prepend">
+          <div class="input-group-text" id="btnGroupAddon">Search for Position</div>
+        </div>
+        <input type="text" class="form-control" id="filterPosition" name="filterPosition"  aria-describedby="btnGroupAddon">
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">Search</button>
+    </div>
+
+    <div>
+      {% autoescape off %}
+      <h2>Position By Company</h2>
+      {{ plot_div_position }}
+      {% endautoescape %}
+    </div>
+
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <div class="input-group-text" id="btnGroupAddon">Search for State</div>
+      </div>
+      <input type="text" class="form-control" id="filterState" name="filterState"  aria-describedby="btnGroupAddon">
+    </div>
+     <div class="form-group">
+      <button type="submit" class="btn btn-primary">Search</button>
+    </div>
+     <div>
+      {% autoescape off %}
+      <h2>Position By State</h2>
+      {{ plot_div_state }}
+      {% endautoescape %}
+    </div>
+
+  </center>
+  </p>
+  {% else %}
+    <center>
+    <div class="alert alert-danger" role="alert">
+    <h1>Please login to enable viewing data/graph</h1>
+    </div>
+    </center>
+  {% endif %}
+{% endblock %}
+</form>
