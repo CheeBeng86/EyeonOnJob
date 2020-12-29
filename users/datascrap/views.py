@@ -27,7 +27,7 @@ def datascrap_run(request):
     position=[]
     company=[]
     state=[]
-    for j in range(30): #loop the page click
+    for j in range(1): #loop the page click
         if j==0:
             url='https://www.jobstreet.com.my/en/job-search/job-vacancy.php?ojs=1'
         else:
@@ -65,11 +65,15 @@ def datascrap_run(request):
 
     driver.close()    
 
-    #store in dataframe
+    
     df = pd.DataFrame(list(zip(position,company,state)), columns=['Position', 'Company','State'])
-    filename = "Job_new.csv"
+    filename = "Job_new - Copy.csv"
     path= os.path.join(settings.DATA_ROOT,filename)
-    df.to_csv(path)
+    #copy data frame from csv
+    df_add = pd.read_csv(path)
+    df_add.append(df)
+    #store in dataframe
+    df_add.to_csv(path)
     return render(request, 'daraframe.html')
 
 def plot_csv(request):
