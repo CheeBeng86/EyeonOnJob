@@ -101,7 +101,7 @@ def dashboard(request):
 
     
         df = pd.DataFrame(list(zip(position,company,state)), columns=['Position', 'Company','State'])
-        filename = "Job_new - Copy.csv"
+        filename = "Job_new.csv"
         path= os.path.join(settings.DATA_ROOT,filename)
         #copy data frame from csv
         df_add = pd.read_csv(path)

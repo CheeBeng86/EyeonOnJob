@@ -144,21 +144,3 @@ def plot_csv(request):
 
 
 
-from plotly.offline import plot
-import plotly.graph_objs as go
-
-class PlotlyChartView(TemplateView):
-    def get(self, request, *args, **kwargs):
-        x_data=[0,1,2,3]
-        y_data=[x**2 for x in x_data]
-        plot_div = plot([go.Scatter(
-            x=x_data,
-            y=y_data,
-            mode='lines',
-            name='My Plotly Chart',
-            opacity=0.8,
-            marker_color='green'
-        )], output_type='div')
-
-        return render(request, 'plotly.html', context={'plot_div':plot_div})
-
