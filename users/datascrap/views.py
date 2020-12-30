@@ -12,6 +12,8 @@ from bs4 import BeautifulSoup
 import chromedriver_binary
 import pandas as pd
 import time
+from plotly.offline import plot
+import plotly.graph_objs as go
 
 # Create your views here.
 
