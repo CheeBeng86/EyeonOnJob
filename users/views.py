@@ -57,6 +57,59 @@ def dashboard(request):
 
         return render(request, 'users/dashboard.html', context ={'plot_div_state': plot_div_position,"read_df":read_df,"x_data":x_data,"y_data":y_data})
     elif request.method == 'POST' and request.POST["scrapedata"]!="":
+        driver = webdriver.Chrome()
+        position=[]
+        company=[]
+        state=[]
+        for j in range(1): #loop the page click
+            if j==0:
+                url='https://www.jobstreet.com.my/en/job-search/job-vacancy.php?ojs=1'
+            else:
+                url='https://www.jobstreet.com.my/en/job-search/job-vacancy.php?ojs=1&pg='+ str(j+1)
+
+            driver.get(url)
+            # load data into bs4
+            soup = BeautifulSoup(driver.page_source,'html.parser')
+
+
+            for row in soup.find_all('div',attrs={'class':'FYwKg _31UWZ fB92N_6 _1pAdR_6 FLByR_6 _2QIfI_6 _2cWXo _1Swh0 HdpOi'}) :
+
+                #position
+                h1rows  = row.find_all('h1')  
+                for h1row in h1rows:
+                    print("POSITION : " + h1row.get_text())
+                    position.append(h1row.get_text())
+
+
+
+                #company
+                spanrowcompanys = row.find_all('span', attrs={'class':'FYwKg _1GAuD C6ZIU_6 _6ufcS_6 _27Shq_6 _29m7__6'}) 
+                for spanrowcompany in spanrowcompanys:
+                    print("COMPANY : " + spanrowcompany.get_text())
+                    company.append(spanrowcompany.get_text())
+
+
+
+                spanrowstates = row.find_all('span', attrs={'class':'FYwKg sXF6i _1GAuD _29LNX'}) 
+                for spanrowstate in spanrowstates:
+                    print("STATE : " + spanrowstate.get_text())    
+                    state.append(spanrowstate.get_text())
+
+            time.sleep(3)   
+
+        driver.close()    
+
+    
+        df = pd.DataFrame(list(zip(position,company,state)), columns=['Position', 'Company','State'])
+        filename = "Job_new - Copy.csv"
+        path= os.path.join(settings.DATA_ROOT,filename)
+        #copy data frame from csv
+        df_add = pd.read_csv(path)
+        df_add.append(df)
+        #store in dataframe
+        df_add.to_csv(path)
+        
+
         return render(request, "users/dashboard.html",context ={'plot_div_scrape': "Scape Done"})
     else:
         return render(request, "users/dashboard.html")
