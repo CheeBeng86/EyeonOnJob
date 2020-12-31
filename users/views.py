@@ -56,7 +56,7 @@ def dashboard(request):
         )], output_type='div')
 
         return render(request, 'users/dashboard.html', context ={'plot_div_state': plot_div_position,"read_df":read_df,"x_data":x_data,"y_data":y_data})
-    elif request.method == 'POST' and request.POST["scrapedata"]!="":
+    elif request.method == 'POST' and request.POST.get("scrapedata","0")=="1":
         driver = webdriver.Chrome()
         position=[]
         company=[]
