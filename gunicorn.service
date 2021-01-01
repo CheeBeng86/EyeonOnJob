@@ -1,0 +1,16 @@
+[Unit]
+Description=Gunicorn daemon for Django Project
+Requires=gunicorn.socket
+After=network.target
+
+[Service]
+WorkingDirectory=/home/django/EyeonOnJob
+ExecStart=/usr/bin/gunicorn3 --name=EyeonOnJob --pythonpath=/home/django/EyeonOnJob --bind unix:/run/gunicorn.socket --config /etc/gunicorn.d/gunicorn.py eyeonjobs.wsgi:application
+Restart=always
+SyslogIdentifier=gunicorn
+User=django
+Group=www-data
+
+
+[Install]
+WantedBy=multi-user.target

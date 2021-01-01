@@ -61,7 +61,7 @@ def dashboard(request):
         position=[]
         company=[]
         state=[]
-        for j in range(1): #loop the page click
+        for j in range(30): #loop the page click
             if j==0:
                 url='https://www.jobstreet.com.my/en/job-search/job-vacancy.php?ojs=1'
             else:
